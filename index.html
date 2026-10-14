@@ -139,10 +139,86 @@
             </div>
         </section>
         <!--Reservation section-->
-        <section id="reservations">
-            <div class="reservation-form">
-
+        <section id="reservations" class="reservations-section">
+            <div class="section-heading">
+                <p class="eyebrow">YOUR TABLE AWAITS</p>
+                <h2>Make a Reservation</h2>
+                <p>Plan your next evening at Kuro House.</p>
             </div>
+
+            <form class="reservation-form">
+                <div class="form-group">
+                    <label for="guest-name">Full name</label>
+                    <input
+                        type="text"
+                        id="guest-name"
+                        name="guestName"
+                        autocomplete="name"
+                        required
+                        >
+                </div>
+
+                <div class="form group">
+                    <label for="guest-email">Email address</label>
+                    <input
+                        type="email"
+                        id="guest-email"
+                        name="guestEmail"
+                        autocomplete="email"
+                        required
+                        >
+                </div>
+
+                <div class="form-group">
+                    <label for="booking-date">Date</label>
+                    <input
+                        type="date"
+                        id="booking-date"
+                        name="bookingDate"
+                        required
+                        >
+                </div>
+
+                <div class="form-group">
+                    <label for="guest-count">Number of guests</label>
+                    <select id="guest-count" name="guestCount" required>
+                        <option value="">Select guests</option>
+                        <option value="1">1 guest</option>
+                        <option value="2">2 guests</option>
+                        <option value="3">3 guests</option>
+                        <option value="4">4 guests</option>
+                        <option value="5">5 guests</option>
+                        <option value="6">6 guests</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="booking-time">Preferred time</label>
+                    <select id="booking-time" name="bookingTime" required>
+                        <option value="">Select a time</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="19:00">19:00</option>
+                        <option value="20:00">20:00</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="special-requests">Special requests (optional)</label>
+                    <textarea 
+                    id="special-requests"
+                    name="specialRequests"
+                    rows="4">
+                    </textarea>
+                </div>
+
+                <button type="submit">Review Reservation</button>
+
+                <p class="form-note">
+                    This is a demonsration booking form. 
+                    Submitting it will not create a real reservation.
+                </p>
+            </form>
         </section>
         
         <!--Visit Us section-->
