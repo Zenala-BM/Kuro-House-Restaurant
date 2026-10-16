@@ -459,9 +459,18 @@ section{
 /*FOOTER*/
 
 .site-footer {
-    padding: 48px 24px 20px;
+    padding: 3rem 5%;
     background-color: var(--color-ink);
     color: var(--color-paper);
+}
+
+.site-footer h2,
+.site-footer h3 {
+    margin-bottom: 1rem;
+}
+
+.site-footer p {
+    margin: 0.4rem 0;
 }
 
 .footer-content {
@@ -475,11 +484,15 @@ section{
 
 }
 
-.footer-brand h2 {
+.footer-content > div {
+    flex: 1;
+}
+
+/* .footer-brand h2 {
     margin: 0 0 8px;
     font-size: 1.8rem;
     font-weight: bold;
-}
+} */
 
 .footer-brand p {
     margin: 0;
@@ -488,8 +501,8 @@ section{
 
 .footer-bottom {
     max-width: var(--content-width);
-    margin: 0 auto;
-    padding-top: 20px;
+    margin-top: 2rem;
+    padding-top: 1rem;
     border-top: 1px solid rgba(184, 173, 157, 0.3);
     text-align: center;
 }
