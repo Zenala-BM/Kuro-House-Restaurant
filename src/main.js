@@ -1,37 +1,41 @@
 
-// import './style.css'
+const navToggle = document.querySelector(".nav-toggle");
+const navLinks = document.querySelector(".nav-links");
 
-// document.querySelector('#app').innerHTML = `
-//   <header class="site-header">
-//     <nav aria-label="Main navigation">
-//       <a class="logo" href="#home">KURO HOUSE</a>
+if (navToggle && navLinks) {
+    // Open and close the mobile menu
+    navToggle.addEventListener("click", () => {
+        const isOpen = navLinks.classList.toggle("is-open");
 
-//       <ul class="nav-links">
-//         <li><a href="#home" class="active">Home</a></li>
-//         <li><a href="#menu">Menu</a></li>
-//         <li><a href="#story">Our Story</a></li>
-//         <li><a href="#reservations">Reservations</a></li>
-//         <li><a href="#visit">Visit Us</a></li>
-//       </ul>
-//     </nav>
-//   </header>
+        navToggle.setAttribute("aria-expanded", String(isOpen));
+        navToggle.setAttribute(
+            "aria-label",
+            isOpen ? "Close navigation menu" : "Open navigation menu"
+        );
+    });
 
-//   <main>
-//     <section class="hero" id="home">
-//       <div class="hero-overlay"></div>
+    // Close the menu after selecting a navigation link
+    navLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+            navLinks.classList.remove("is-open");
+            navToggle.setAttribute("aria-expanded", "false");
+            navToggle.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+            );
+        });
+    });
 
-//       <div class="hero-content">
-//         <p class="eyebrow">Japanese Dining · Thoughtfully Crafted</p>
-
-//         <h1 class="hero-title">An Artful Taste of Japan</h1>
-
-//         <p class="hero-subtitle">
-//           Discover a thoughtful approach to Japanese dining,
-//           where tradition meets contemporary elegance.
-//         </p>
-
-//         <a class="hero-btn" href="#menu">Explore Our Menu</a>
-//       </div>
-//     </section>
-//   </main>
-// `
+    // Close the menu with the Escape key
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            navLinks.classList.remove("is-open");
+            navToggle.setAttribute("aria-expanded", "false");
+            navToggle.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+            );
+            navToggle.focus();
+        }
+    });
+}

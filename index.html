@@ -11,17 +11,31 @@
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
     <header class="site-header">
-    <nav aria-label="Main navigation">
-      <a class="logo" href="#home">KURO HOUSE</a>
+    
+<nav aria-label="Main navigation">
+    <a class="logo" href="#home">KURO HOUSE</a>
 
-      <ul class="nav-links">
+    <button
+        class="nav-toggle"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+    >
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <ul class="nav-links" id="primary-navigation">
         <li><a href="#home" class="active">Home</a></li>
         <li><a href="#menu">Menu</a></li>
         <li><a href="#story">Our Story</a></li>
         <li><a href="#reservations">Reservations</a></li>
-        <li><a href="#visit">Visit Us</a></li>
-      </ul>
-    </nav>
+        <li><a href="#footer">Visit Us</a></li>
+    </ul>
+</nav>
+
   </header>
 
   <main>
@@ -38,9 +52,217 @@
           where tradition meets contemporary elegance.
         </p>
 
-        <a class="hero-btn" href="#menu">Explore Our Menu</a>
+        <a class="hero-btn" href="#reservations">Book a Table</a>
       </div>
     </section>
-  </main>
+
+    <!--Menu Section-->
+    <section id="menu" class="menu-section">
+                <div class="section-heading">
+                    <P class="eyebrow">A TASTE OF KURO</P>
+                    <h2>Our Menu</h2>
+                    <p>Japanese-inspired favourites, prepared with care.</p>
+                </div>
+
+                <div class="menu-grid">
+                    <!--Starters-->
+                    <article class="menu-category">
+                        <h3>Starters</h3>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <h4>Gyoza</h4>
+                                <p>Pan-seared dumpling with a savoury dipping sauce</p>
+                            </div>
+                            <span class="menu-price"> €5</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <h4>Miso Soup</h4>
+                                <p>A comforting broth with tofu and spring onion</p>
+                            </div>
+                            <span class="menu-price"> €2,5</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <h4>Takoyaki</h4>
+                                <p>Japanese-style octopus bites with savoury toppings</p>
+                            </div>
+                            <span class="menu-price"> €5,5</span>
+                        </div>
+                    </article>
+
+                    <!--Main-->
+                    <article class="menu-category">
+                        <h3>Main</h3>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <h4>Katsudon</h4>
+                                <p>Fried Panko-breaded pork cutlet with egg over rice</p>
+                            </div>
+                            <span class="menu-price"> €8</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <h4>Ramen</h4>
+                                <p>Wheat noodles in savoury broth with sliced pork, boiled eggs and dried seaweed </p>
+                            </div>
+                            <span class="menu-price"> €8,5</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <h4>Yakitori</h4>
+                                <p>Skewered, charcoal-grilled chicken parts brushed with tare</p>
+                            </div>
+                            <span class="menu-price"> €7</span>
+                        </div>
+                    </article>
+                    <!--Desserts-->
+                    <article class="menu-category">
+                        <h3>Desserts</h3>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <h4>Dango</h4>
+                                <p>Japanese sweet rice ball dumpling confection</p>
+                            </div>
+                            <span class="menu-price"> €2</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <h4>Matcha Tiramisu</h4>
+                                <p>Japanese matcha and Italian creamy mascarpone fusion dessert</p>
+                            </div>
+                            <span class="menu-price"> €3</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <h4>Taiyaki</h4>
+                                <p>Fish-shaped cake with sweet red bean filling</p>
+                            </div>
+                            <span class="menu-price"> €2,5</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <!--Our Story section-->
+            <section id="story" class="story-section">
+                <div class="story-content">
+                    <!--KH Image-->
+                    <div class="story-image">
+                        <img src="images/KHInterior.jpg" alt="Kuro House Interior"
+                        width="800" height="600">
+                    </div>
+                    <!--Our story-->
+                    <div class="story-text">
+                        <p class="eyebrow">OUR PHILOSOPHY</p>
+                        <h2>A Place to Unwind</h2>
+                        <p>at Kuro House, we bring people together over comforting Japanese-inspired
+                            dishes and the simple pleasure of a shared meal
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <!--Reservation section-->
+            <section id="reservations" class="reservations-section">
+                <div class="section-heading">
+                    <p class="eyebrow">YOUR TABLE AWAITS</p>
+                    <h2>Make a Reservation</h2>
+                    <p>Plan your next evening at Kuro House.</p>
+                </div>
+
+                <form class="reservation-form">
+                    <div class="form-group">
+                        <label for="guest-name">Full name</label>
+                        <input
+                            type="text"
+                            id="guest-name"
+                            name="guestName"
+                            autocomplete="name"
+                            required
+                            >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="guest-email">Email address</label>
+                        <input
+                            type="email"
+                            id="guest-email"
+                            name="guestEmail"
+                            autocomplete="email"
+                            required
+                            >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="booking-date">Date</label>
+                        <input
+                            type="date"
+                            id="booking-date"
+                            name="bookingDate"
+                            required
+                            >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="guest-count">Number of guests</label>
+                        <select id="guest-count" name="guestCount" required>
+                            <option value="">Select guests</option>
+                            <option value="1">1 guest</option>
+                            <option value="2">2 guests</option>
+                            <option value="3">3 guests</option>
+                            <option value="4">4 guests</option>
+                            <option value="5">5 guests</option>
+                            <option value="6">6 guests</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="booking-time">Preferred time</label>
+                        <select id="booking-time" name="bookingTime" required>
+                            <option value="">Select a time</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="special-requests">Special requests (optional)</label>
+                        <textarea id="special-requests" name="specialRequests" rows="4"></textarea>
+                    </div>
+
+                    <button type="submit">Review Reservation</button>
+
+                    <p class="form-note">
+                        This is a demonstration booking form. 
+                        Submitting it will not create a real reservation.
+                    </p>
+                </form>
+            </section>
+
+
+        <!--Footer section-->
+        <footer class="site-footer" id="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h2>Kuro House</h2>
+                    <p>Some motto</p> <!--fill in motto thing later-->
+                </div>
+                <div class="footer-hours">
+                    <h3>Operating Hours</h3>
+                    <p>Monday - Thursday: 12:00 - 21:00</p>
+                    <p>Friday - Saturday: 12:00 - 22:00</p>
+                    <p>Sunday 12:00 - 18:00</p>
+                </div>
+                <div class="footer-location">
+                <h3>Find Us</h3>
+                    <p>42 Yashiori Avenue</p>
+                    <p>Milan, Italy</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kuro House. All rights reserved.</p>
+            </div>
+        </footer>
   </body>
 </html>
