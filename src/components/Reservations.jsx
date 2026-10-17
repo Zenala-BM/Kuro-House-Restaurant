@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import GuestStepper from './GuestStepper'
 
 function Reservations() {
   const [message, setMessage] = useState('') 
+  const [guests, setGuests] = useState(2)
+
   return (
     <section
       id="reservations"
@@ -79,26 +82,16 @@ function Reservations() {
     </div>
 
     {/* Number of guests */}
-    <div className="flex min-w-0 flex-col gap-2">
-    <label htmlFor="guest-count" className="text-sm font-bold">
-        Number of guests
-    </label>
-    <select
-        id="guest-count"
-        name="guestCount"
-        required
-        defaultValue=""
-        className="w-full min-w-0 border border-[#d7cbb8] bg-[#fffaf3] px-3.5 py-3 text-stone-900 focus:border-red-700 focus:outline-2 focus:outline-offset-2 focus:outline-red-700"
-    >
-        <option value="" disabled>Select guests</option>
-        <option value="1">1 guest</option>
-        <option value="2">2 guests</option>
-        <option value="3">3 guests</option>
-        <option value="4">4 guests</option>
-        <option value="5">5 guests</option>
-        <option value="6">6 guests</option>
-    </select>
-    </div>
+<div className="flex min-w-0 flex-col gap-2">
+  <label className="text-sm font-bold">
+    Number of guests
+  </label>
+
+  <GuestStepper
+    guests={guests}
+    onGuestsChange={setGuests}
+  />
+</div>
     
     {/* Preferred time */}
     <div className="flex min-w-0 flex-col gap-2">
@@ -143,6 +136,11 @@ function Reservations() {
     <p className="col-span-full m-0 text-center text-sm text-stone-600">
     This is a demonstration booking form. Submitting it will not create a real reservation.
     </p>
+    <input
+      type="hidden"
+      name="guestCount"
+      value={guests}
+    />
 </form>
 
   {message && (
