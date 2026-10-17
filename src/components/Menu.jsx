@@ -1,10 +1,13 @@
-
+import { useState } from 'react'
 import menuItems from '../data/menuData'
 import MenuItem from './MenuItem'
 
-const categories = ['Starters', 'Main', 'Desserts']
-
 function Menu() {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const filteredItems =
+  selectedCategory === 'All'
+    ? menuItems
+    : menuItems.filter((item) => item.category === selectedCategory)
   return (
     <section id="menu" className="bg-[#f3eadc] px-6 py-[90px]">
       <div className="mx-auto mb-12 max-w-[650px] text-center">
@@ -19,23 +22,30 @@ function Menu() {
         <p className="text-stone-600">
           Japanese-inspired favourites, prepared with care.
         </p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {['All', 'Starters', 'Main', 'Desserts'].map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`border px-5 py-2 text-sm transition-colors ${
+                selectedCategory === category
+                  ? 'border-red-800 bg-red-800 text-white'
+                  : 'border-stone-300 bg-transparent text-stone-700 hover:border-red-800 hover:text-red-800'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {categories.map((category) => (
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {filteredItems.map((item) => (
           <article
-            key={category}
+            key={item.id}
             className="border border-[#e4dbcf] border-t-[3px] border-t-red-700 bg-white px-6 py-[30px]"
           >
-            <h3 className="mb-6 border-b border-[#e4dbcf] pb-4 text-2xl font-normal">
-              {category}
-            </h3>
-
-            {menuItems
-              .filter((item) => item.category === category)
-              .map((item) => (
-                <MenuItem key={item.id} item={item} />
-              ))}
+            <MenuItem item={item} />
           </article>
         ))}
       </div>
