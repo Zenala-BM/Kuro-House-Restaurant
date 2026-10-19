@@ -68,7 +68,7 @@ Install [Node.js](https://nodejs.org/) and npm.
 1. Clone the repository:
 
    ```bash
-   git clone YOUR_REPOSITORY_URL
+   git clone https://github.com/Zenala-BM/Kuro-House-Restaurant.git
    ```
 
 2. Navigate into the project directory:
