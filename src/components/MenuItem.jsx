@@ -1,4 +1,3 @@
-
 function MenuItem({ item }) {
   return (
     <article className="flex items-start justify-between gap-4 border-b border-stone-200 py-[18px] last:border-b-0 last:pb-0">

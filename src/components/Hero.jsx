@@ -1,4 +1,3 @@
-
 function Hero() {
   return (
     <section

@@ -71,6 +71,13 @@ const menuItems = [
     price: '€2,5',
     category: 'Desserts',
   },
+  {
+    id: 10,
+    name: 'Yakisoba',
+    description: 'Noodles with fried vegetables',
+    price: '€4,5',
+    category: 'Main',
+  },
 ]
 
 export default menuItems

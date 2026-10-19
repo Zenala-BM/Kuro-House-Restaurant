@@ -137,6 +137,7 @@ function Reservations() {
     This is a demonstration booking form. Submitting it will not create a real reservation.
     </p>
     <input
+    
       type="hidden"
       name="guestCount"
       value={guests}
