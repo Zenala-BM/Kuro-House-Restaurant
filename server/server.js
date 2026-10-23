@@ -275,6 +275,101 @@ app.post('/api/auth/logout', (req, res) => {
   });
 });
 
+//reservation route
+
+app.post('/api/reservations', async (req, res) => {
+  try {
+    // A reservation requires a logged-in user
+    if (!req.session.userId) {
+      return res.status(401).json({
+        message: 'You must be logged in to make a reservation.',
+      });
+    }
+
+    const {
+      reservation_date,
+      reservation_time,
+      guest_count,
+      special_requests,
+    } = req.body;
+
+    // Check the required fields
+    if (!reservation_date || !reservation_time || guest_count === undefined) {
+      return res.status(400).json({
+        message: 'Date, time, and guest count are required.',
+      });
+    }
+
+    // Validate the guest count
+    const guests = Number(guest_count);
+
+    if (!Number.isInteger(guests) || guests < 1 || guests > 12) {
+      return res.status(400).json({
+        message: 'Guest count must be between 1 and 12.',
+      });
+    }
+
+    // Save the reservation for the logged-in user
+    const result = await pool.query(
+      `INSERT INTO reservations
+        (user_id, reservation_date, reservation_time, guest_count, special_requests)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING id, user_id, reservation_date, reservation_time,
+                 guest_count, special_requests, created_at`,
+      [
+        req.session.userId,
+        reservation_date,
+        reservation_time,
+        guests,
+        special_requests?.trim() || null,
+      ]
+    );
+
+    return res.status(201).json({
+      message: 'Reservation created successfully!',
+      reservation: result.rows[0],
+    });
+  } catch (error) {
+    console.error('Reservation creation failed:', error.message);
+
+    return res.status(500).json({
+      message: 'Something went wrong while creating the reservation.',
+    });
+  }
+});
+
+//retrieve reservations
+
+app.get('/api/reservations', async (req, res) => {
+  try {
+    // Require a logged-in user
+    if (!req.session.userId) {
+      return res.status(401).json({
+        message: 'You must be logged in to view reservations.',
+      });
+    }
+
+    // Retrieve only this user's reservations
+    const result = await pool.query(
+      `SELECT id, reservation_date, reservation_time,
+              guest_count, special_requests, created_at
+       FROM reservations
+       WHERE user_id = $1
+       ORDER BY reservation_date ASC, reservation_time ASC`,
+      [req.session.userId]
+    );
+
+    return res.json({
+      reservations: result.rows,
+    });
+  } catch (error) {
+    console.error('Fetching reservations failed:', error.message);
+
+    return res.status(500).json({
+      message: 'Could not retrieve reservations.',
+    });
+  }
+});
 
 
 // Start the server
