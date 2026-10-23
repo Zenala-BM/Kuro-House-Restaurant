@@ -357,11 +357,18 @@ app.get('/api/reservations', async (req, res) => {
 
     // Retrieve only this user's reservations
     const result = await pool.query(
-      `SELECT id, reservation_date, reservation_time,
-              guest_count, special_requests, created_at
-       FROM reservations
-       WHERE user_id = $1
-       ORDER BY reservation_date ASC, reservation_time ASC`,
+      `
+        SELECT
+        id,
+        reservation_date::text AS reservation_date,
+        reservation_time,
+        guest_count,
+        special_requests,
+        created_at
+        FROM reservations
+        WHERE user_id = $1
+        ORDER BY reservation_date ASC, reservation_time ASC
+`,
       [req.session.userId]
     );
 

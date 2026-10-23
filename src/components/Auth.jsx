@@ -4,8 +4,12 @@ import { apiRequest } from '../api/client'
 function Auth() {
   const [isLogin, setIsLogin] = useState(true)
   const [message, setMessage] = useState('')
+  //reservation submission
   const [isSubmitting, setIsSubmitting] = useState(false)
+  //login and logout
   const [user, setUser] = useState(null)
+  //user reservations
+  const [reservations, setReservations] = useState([])
 
   //session checker
     useEffect(() => {
@@ -13,15 +17,19 @@ function Auth() {
         try {
         const result = await apiRequest('/auth/me')
         setUser(result.user)
+
+        const bookingResult = await apiRequest('/reservations')
+        setReservations(bookingResult.reservations)
         } catch (error) {
         setUser(null)
+        setReservations([])
         }
     }
 
     checkSession()
     }, [])
 
-
+    //login/logout card
   return (
     <section className="bg-[#f3eadc] px-6 py-20">
       <div className="mx-auto max-w-md rounded-sm bg-white p-8 shadow-sm sm:p-10">
@@ -63,6 +71,44 @@ function Auth() {
             <p className="mt-5 text-sm leading-6 text-gray-600">
             You're all set. You can now manage your Kuro House reservations.
             </p>
+
+            <div className="mt-8 border-t border-[#d5cabb] pt-6">
+            <p className="mb-4 text-xs uppercase tracking-[0.2em] text-[#a52a2a]">
+                Your Reservations
+            </p>
+
+            {reservations.length === 0 ? (
+                <p className="text-sm leading-6 text-gray-600">
+                You don't have any reservations yet.
+                </p>
+            ) : (
+                <div className="space-y-4">
+                {reservations.map((reservation) => (
+                    <div
+                    key={reservation.id}
+                    className="border border-[#d5cabb] p-4"
+                    >
+                    <p className="font-serif text-lg text-[#171717]">
+                        {reservation.reservation_date}
+                    </p>
+                    <p className="mt-1 text-sm text-gray-600">
+                        Time: {reservation.reservation_time.slice(0, 5)}
+                    </p>
+                    <p className="mt-1 text-sm text-gray-600">
+                        Guests: {reservation.guest_count}
+                    </p>
+
+                    {reservation.special_requests && (
+                        <p className="mt-2 text-sm leading-6 text-gray-600">
+                        Special requests: {reservation.special_requests}
+                        </p>
+                    )}
+                    </div>
+                ))}
+                </div>
+            )}
+            </div>
+
             
             <button
             type="button"
