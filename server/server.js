@@ -4,16 +4,22 @@ import { pool } from './db/pool.js';
 import bcrypt from 'bcrypt';
 import session from 'express-session';
 import connectPgSimple from 'connect-pg-simple';
+import cors from 'cors';
 
 
 const app = express();
-
 const PgSession = connectPgSimple(session);
 
 const sessionStore = new PgSession({
   pool,
   createTableIfMissing: true,
 });
+
+//cors config
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 
 //middleware
 app.use(express.json()); //parse incoming JSON requests

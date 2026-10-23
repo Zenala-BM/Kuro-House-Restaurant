@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import GuestStepper from './GuestStepper'
+import { apiRequest } from '../api/client'
 
 function Reservations() {
   const [message, setMessage] = useState('') 
   const [guests, setGuests] = useState(2)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   return (
     <section
@@ -28,12 +30,37 @@ function Reservations() {
 
       
 <form 
-  onSubmit={(event) => {
-    event.preventDefault()
-    setMessage(
-      'Thanks! This is a demonstration only. Your reservation has not been made.',
-    )
-  }}
+  
+onSubmit={async (event) => {
+  event.preventDefault()
+
+  const form = event.currentTarget
+  const formData = new FormData(form)
+
+  setMessage('')
+  setIsSubmitting(true)
+
+  try {
+    const result = await apiRequest('/reservations', {
+      method: 'POST',
+      body: JSON.stringify({
+        reservation_date: formData.get('bookingDate'),
+        reservation_time: formData.get('bookingTime'),
+        guest_count: guests,
+        special_requests: formData.get('specialRequests'),
+      }),
+    })
+
+    setMessage(result.message)
+    form.reset()
+    setGuests(2)
+  } catch (error) {
+    setMessage(error.message)
+  } finally {
+    setIsSubmitting(false)
+  }
+}}
+
   className="mx-auto grid max-w-[800px] grid-cols-1 gap-6 border border-[#ded2c2] bg-white p-6 shadow-[0_12px_32px_rgba(23,23,23,0.06)] sm:grid-cols-2 sm:p-9"
 >
   {/* Full name */}
@@ -126,16 +153,16 @@ function Reservations() {
     />
     </div>
 
+    
     <button
-    type="submit"
-    className="col-span-full w-full border border-red-700 bg-red-700 px-6 py-[15px] font-bold text-white transition-colors duration-200 hover:border-[#842020] hover:bg-[#842020] focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-stone-900"
+      type="submit"
+      disabled={isSubmitting}
+      className="col-span-full w-full border border-red-700 bg-red-700 px-6 py-[15px] font-bold text-white transition-colors duration-200 hover:border-[#842020] hover:bg-[#842020] focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-stone-900 disabled:cursor-not-allowed disabled:opacity-60"
     >
-    Review Reservation
+      {isSubmitting ? 'Submitting...' : 'Make Reservation'}
     </button>
 
-    <p className="col-span-full m-0 text-center text-sm text-stone-600">
-    This is a demonstration booking form. Submitting it will not create a real reservation.
-    </p>
+
     <input
     
       type="hidden"
