@@ -8,6 +8,7 @@ import cors from 'cors';
 
 
 const app = express();
+app.set('trust proxy', 1);
 const PgSession = connectPgSimple(session);
 
 const sessionStore = new PgSession({
