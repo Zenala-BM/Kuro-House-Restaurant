@@ -1,41 +1,66 @@
-# Kuro House — Japanese-Inspired Restaurant Website
+# Kuro House — Japanese Restaurant Website
 
-Kuro House is a responsive restaurant website built as part of a web development learning assignment. The project focuses on component-based development with React, interactive UI elements, responsive layouts, and utility-first styling with Tailwind CSS.
+Kuro House is a modern Japanese restaurant website inspired by the Japanese izakaya dining experience. The project combines a responsive restaurant website with a backend API, PostgreSQL database, user authentication, and table reservation management.
 
-## Overview
+**Live Website:** https://kuro-house-restaurant.pages.dev/
 
-The website presents Kuro House as a Japanese-inspired restaurant, featuring its menu, restaurant story, reservation form, and contact information in a clean, understated design.
+**Backend API:** https://kuro-house-restaurant.onrender.com
 
 ## Features
 
-- **Responsive navigation:** Navigation links and a mobile menu for smaller screens.
-- **Hero section:** Restaurant introduction with a prominent reservation call to action.
-- **Interactive menu:** Nine menu items organised into categories, with filters for All, Starters, Main, and Desserts.
-- **Restaurant story:** An introduction to the restaurant and its philosophy.
-- **Reservation form:** Collects guest details, date, time, and special requests.
-- **Guest selector:** An interactive stepper for selecting between 1 and 10 guests.
-- **Form feedback:** Displays a demonstration message when the reservation form is submitted.
-- **Responsive footer:** Includes restaurant information, opening hours, and location details.
+### Restaurant Website
+- Responsive, mobile-first layout.
+- Navigation, hero section, menu, restaurant story, reservations, and footer.
+- Menu items organised by category: Starters, Mains, and Desserts.
+- Interactive menu category filtering.
+- Reusable React components.
+- Responsive styling with Tailwind CSS.
 
-> **Note:** This is a front-end demonstration project. Reservations are not stored or sent to a restaurant, and no backend or database is connected.
+### User Authentication
+- User registration and login.
+- Password hashing using bcrypt.
+- Session-based authentication.
+- Persistent login sessions across page refreshes.
+- Logout functionality.
+- Session storage backed by PostgreSQL.
 
-## Technologies Used
+### Reservation Management
+- Authenticated users can create reservations.
+- Reservations include the date, time, guest count, and optional special requests.
+- Reservations are stored in PostgreSQL.
+- Users can retrieve and view their own reservations.
+- Guest counts are validated between 1 and 12.
+- Reservation access is restricted to authenticated users.
 
-- React
-- JavaScript (JSX)
-- Vite
-- Tailwind CSS v4
-- HTML5
-- Git and GitHub
+## Technology Stack
+
+| Area | Technologies |
+|---|---|
+| Frontend | React, JavaScript, Vite |
+| Styling | Tailwind CSS v4 |
+| Backend | Node.js, Express |
+| Database | PostgreSQL, Neon |
+| Authentication | bcrypt, express-session |
+| Session storage | connect-pg-simple |
+| API communication | Fetch API |
+| Frontend hosting | Cloudflare Pages |
+| Backend hosting | Render |
+| Version control | Git, GitHub |
 
 ## Project Structure
 
 ```text
 Kuro-House-Restaurant/
+├── functions/
+│   └── api/
+│       └── [[path]].js
 ├── public/
 │   └── images/
 ├── src/
+│   ├── api/
+│   │   └── client.js
 │   ├── components/
+│   │   ├── Auth.jsx
 │   │   ├── Header.jsx
 │   │   ├── Hero.jsx
 │   │   ├── Menu.jsx
@@ -49,71 +74,171 @@ Kuro-House-Restaurant/
 │   ├── App.jsx
 │   ├── main.jsx
 │   └── index.css
+├── server/
+│   ├── db/
+│   │   └── pool.js
+│   ├── server.js
+│   ├── package.json
+│   └── .env
+├── .gitignore
 ├── index.html
 ├── package.json
 ├── vite.config.js
 └── README.md
 ```
 
-*The structure above reflects the intended organisation of the project. Adjust the filenames if your final repository differs.*
+*Note: The structure above highlights the main project files. Your repository may contain additional files.*
 
 ## Getting Started
 
 ### Prerequisites
 
-Install [Node.js](https://nodejs.org/) and npm.
+Install the following before running the project locally:
 
-### Installation
+- Node.js and npm.
+- Git.
+- A PostgreSQL database, such as Neon, configured with the required tables.
 
-1. Clone the repository:
+### 1. Clone the repository
 
-   ```bash
-   git clone https://github.com/Zenala-BM/Kuro-House-Restaurant.git
-   ```
+```bash
+git clone https://github.com/Zenala-BM/Kuro-House-Restaurant.git
+cd Kuro-House-Restaurant
+```
 
-2. Navigate into the project directory:
+### 2. Install frontend dependencies
 
-   ```bash
-   cd Kuro-House-Restaurant
-   ```
+From the project root:
 
-3. Install the dependencies:
+```bash
+npm install
+```
 
-   ```bash
-   npm install
-   ```
+### 3. Configure the backend
 
-4. Start the development server:
+Navigate into the server directory and install its dependencies:
 
-   ```bash
-   npm run dev
-   ```
+```bash
+cd server
+npm install
+```
 
-5. Open the local URL displayed in the terminal, usually `http://localhost:5173`.
+Create a `.env` file inside the `server` directory with the following variables:
+
+```env
+PORT=3000
+DATABASE_URL=your_postgresql_connection_string
+SESSION_SECRET=your_long_random_secret
+NODE_ENV=development
+```
+
+Replace the example values with your own credentials. Never commit your actual `.env` file or expose database credentials and session secrets.
+
+Ensure that your PostgreSQL database contains the required `users` and `reservations` tables.
+
+### 4. Start the backend
+
+From the `server` directory:
+
+```bash
+npm run dev
+```
+
+The API should be available at:
+
+`http://localhost:3000`
+
+### 5. Start the frontend
+
+Open a second terminal at the project root:
+
+```bash
+npm run dev
+```
+
+Vite will provide a local development URL, usually:
+
+`http://localhost:5173`
+
+Open the URL displayed in your terminal to use the website locally.
+
+## API Endpoints
+
+The backend exposes the following endpoints:
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/db-health` | Checks database connectivity |
+| POST | `/api/auth/register` | Registers a new user |
+| POST | `/api/auth/login` | Authenticates a user |
+| GET | `/api/auth/me` | Retrieves the current session user |
+| POST | `/api/auth/logout` | Ends the current session |
+| POST | `/api/reservations` | Creates a reservation |
+| GET | `/api/reservations` | Retrieves the authenticated user's reservations |
+
+Protected reservation endpoints require a valid authenticated session. Reservation queries are restricted to the current user's account.
+
+## Database Design
+
+The application uses PostgreSQL with two main tables.
+
+### Users
+
+Stores account information, including:
+
+- `id` — primary key.
+- `name` — user's name.
+- `email` — unique email address.
+- `password_hash` — hashed password.
+- `created_at` — account creation timestamp.
+
+### Reservations
+
+Stores restaurant reservation information, including:
+
+- `id` — primary key.
+- `user_id` — foreign key referencing the user.
+- `reservation_date` — reservation date.
+- `reservation_time` — reservation time.
+- `guest_count` — number of guests, between 1 and 12.
+- `special_requests` — optional customer requests.
+- `created_at` — reservation creation timestamp.
+
+The relationship between the tables allows each user to have multiple reservations. The foreign key also ensures that reservations are associated with valid user accounts.
+
+## Deployment
+
+The application is deployed using separate frontend and backend hosting services.
+
+- **Cloudflare Pages:** Hosts the React frontend and handles `/api/*` requests through a Pages Function proxy.
+- **Render:** Hosts the Express API.
+- **Neon:** Provides the hosted PostgreSQL database.
+
+In production, the frontend sends API requests through the same-origin `/api` path, which the Cloudflare Pages Function forwards to the backend. The backend uses secure session cookies and PostgreSQL-backed session storage to maintain authentication.
+
+## Security
+
+- Passwords are hashed with bcrypt rather than stored as plain text.
+- Database credentials and session secrets are stored in environment variables.
+- `.env` files are excluded from version control.
+- Session cookies are configured as HTTP-only and secure in production.
+- Authenticated endpoints verify the user's session.
+- Reservations are associated with the authenticated user's ID.
 
 ## Learning Objectives
 
-This project provides practical experience with:
+This project demonstrates practical experience with:
 
-- Breaking a website into reusable React components.
-- Separating menu data from presentation logic.
-- Rendering lists using JavaScript's `map()` method.
-- Filtering data using `filter()`.
-- Managing interactive UI state with React's `useState` hook.
-- Passing values and callback functions through props.
-- Building controlled components.
-- Creating responsive, mobile-first layouts with Tailwind CSS.
-- Using Git commits to track incremental development.
+- Building reusable React components.
+- Managing UI state and controlled form inputs.
+- Creating a REST-style API with Express.
+- Connecting a backend to a PostgreSQL database.
+- Implementing password hashing and session-based authentication.
+- Handling protected routes and user-specific data.
+- Configuring environment variables.
+- Deploying a full-stack application.
+- Using Git and GitHub for version control.
 
-## Future Improvements
+## Author
 
-Potential future enhancements include:
-
-- Connecting the reservation form to a backend.
-- Adding reservation validation and availability checks.
-- Integrating an online ordering and cart system.
-- Adding automated tests and accessibility improvements.
-
-## Project Status
-
-Front-end learning project — developed incrementally as part of a web development assignment.
+Developed as an individual web development project.
