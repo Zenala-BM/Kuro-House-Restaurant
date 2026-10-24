@@ -22,8 +22,8 @@ app.use(cors({
 }));
 
 //middleware
-app.use(express.json()); //parse incoming JSON requests
-const PORT = 3000;
+app.use(express.json()); 
+const PORT = process.env.PORT || 3000;
 
 app.use(
   session({
