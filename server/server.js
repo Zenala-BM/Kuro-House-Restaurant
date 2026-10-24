@@ -17,9 +17,13 @@ const sessionStore = new PgSession({
 
 //cors config
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://kuro-house-restaurant.pages.dev',
+  ],
   credentials: true,
 }));
+
 
 //middleware
 app.use(express.json()); 
@@ -34,7 +38,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 1000 * 60 * 60 * 24,
     },
   })
